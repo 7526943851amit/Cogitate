@@ -1,0 +1,186 @@
+function calculateSavings() {
+  const numberOfPolicies = parseFloat(document.getElementById('points').value);
+  console.log("numberOfPolicies", numberOfPolicies);
+  const cycleTime = parseFloat(document.getElementById('points2').value);
+  console.log("cycleTime", cycleTime);
+  const hourlyWage = parseFloat(document.getElementById('points3').value);
+  console.log("hourlyWage", hourlyWage);
+  document.getElementById('number_of_policies').textContent = `${numberOfPolicies.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+  document.getElementById('average_cycle_time').textContent = cycleTime + ' Days';
+  document.getElementById('average_hourly_wage').textContent = '$' + hourlyWage;
+  const workingHoursPerDay = 8;
+  const constantFactor = 0.875;
+  const savings = numberOfPolicies * (workingHoursPerDay * cycleTime) * hourlyWage * constantFactor;
+  console.log('savings',savings);
+  document.querySelector('.formula_result').textContent = `$${savings.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+}
+document.getElementById('points').addEventListener('input', calculateSavings);
+document.getElementById('points2').addEventListener('input', calculateSavings);
+document.getElementById('points3').addEventListener('input', calculateSavings);
+calculateSavings();
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const menuItems = document.querySelectorAll('.floating_menu a');
+  const sections = Array.from(menuItems).map(item => document.querySelector(item.getAttribute('href')));
+
+  function updateActiveClass() {
+      let currentIndex = -1;
+
+      sections.forEach((section, index) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+              currentIndex = index;
+          }
+      });
+
+      // Remove 'active' class from all menu items
+      menuItems.forEach((item, index) => {
+          item.parentElement.classList.toggle('active', index === currentIndex);
+      });
+  }
+
+  // Click event to scroll and set active class
+  menuItems.forEach(item => {
+      item.addEventListener('click', function (event) {
+          event.preventDefault(); 
+           
+          const targetId = this.getAttribute('href'); 
+          const targetElement = document.querySelector(targetId); 
+
+          if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+
+              // Remove 'active' class from all menu items
+              menuItems.forEach(menuItem => {
+                  menuItem.parentElement.classList.remove('active');
+              });
+
+              // Add 'active' class to the clicked menu item
+              this.parentElement.classList.add('active');
+          }
+      });
+  });
+
+  // Listen for scroll events to update the active class
+  window.addEventListener('scroll', updateActiveClass);
+
+  // Initial check to set the active class correctly on page load
+  updateActiveClass();
+
+  // Ensure the first menu item is active on page load if the first section is in view
+  if (sections.length > 0) {
+      const firstSectionRect = sections[0].getBoundingClientRect();
+      if (firstSectionRect.top <= window.innerHeight / 2 && firstSectionRect.bottom >= window.innerHeight / 2) {
+          menuItems[0].parentElement.classList.add('active');
+      }
+  }
+});
+
+
+
+/* floating menu sidebar */
+function floating_menu_shortcode() {
+    if (is_front_page()) {
+        ob_start(); 
+        ?>
+        <ul class="floating_menu">
+   <li class="f_m_item active">
+      <a href="#home-section">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Home
+         </div>
+      </a>
+   </li>
+      <li class="f_m_item">
+      <a href="#our-products">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+         Products
+         </div>
+      </a>
+   </li>
+    
+      <li class="f_m_item">
+      <a href="#plateforms">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Platform
+         </div>
+      </a>
+   </li>
+  
+   <li class="f_m_item">
+      <a href="#Segments">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Segments
+         </div>
+      </a>
+   </li>
+   <li class="f_m_item">
+      <a href="#our-features">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Benefits
+         </div>
+      </a>
+   </li>
+     <li class="f_m_item">
+      <a href="#Calculator">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+         Calculator 
+         </div>
+      </a>
+   </li>
+   <li class="f_m_item">
+      <a href="#testimonials">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Testimonials
+         </div>
+      </a>
+   </li>
+     <li class="f_m_item">
+      <a href="#insights-section">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Insights
+         </div>
+      </a>
+   </li>
+      <li class="f_m_item">
+      <a href="#footer-section">
+         <div class="f_m-icon">
+            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+         </div>
+         <div class="f_m_label">
+            Footer
+         </div>
+      </a>
+   </li>
+</ul>
+<?php
+        return ob_get_clean(); 
+    }
+}
+add_shortcode('floating_menu', 'floating_menu_shortcode');
