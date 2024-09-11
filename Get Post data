@@ -1,0 +1,57 @@
+<?php 
+/* Template Name: News */
+get_header();
+ ?>
+
+<div class="news_page">
+    <div class="news_banner">
+        <div class="news_container">
+        <div class="news_banner_content">
+            <h2>Cogitate <span>In the News</span></h2>
+        </div>
+        <div class="new_banner_img">
+            <img src="https://lightsteelblue-bear-643236.hostingersite.com/wp-content/uploads/2024/09/news@2x.png">
+        </div>
+    </div>
+</div>
+<div class="news_container">
+        <div class="newsList">
+            <?php
+            $args = array(
+                'post_type' => 'news', 
+                'posts_per_page' => -1, 
+            );
+            $news_query = new WP_Query($args);
+
+            if ($news_query->have_posts()) :
+                while ($news_query->have_posts()) : $news_query->the_post(); ?>
+                    <div class="news_box">
+                        <p class="newsDate"><?php echo get_the_date(); ?></p>
+                        <h2><?php the_title(); ?></h2>
+                        <div class="newsLinks">
+                            <a href="<?php the_permalink(); ?>" class="linkBtn">READ MORE</a>
+                            <ul class="d-flex align-items-end">
+                                <li><a href="https://twitter.com/cogitatetech" target="_blank"><img alt="Twitter" src="https://uatapps.cogitate.us/cogitatecms/images/new-img/twitterSI.svg" width="24" height="24"></a></li>
+                                <li><a href="https://www.linkedin.com/company/cogitate-technology-solutions/" target="_blank"><i class="fa fa-linkedin-square ms-3" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.facebook.com/Cogitate-Technology-Solutions-313805012108651" target="_blank"><i class="fa fa-facebook-square ms-3" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                <?php endwhile;
+
+                wp_reset_postdata();
+            else :
+                echo '<p>No news posts found.</p>';
+            endif;
+            ?>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+
+<?php
+ get_footer(); ?>
