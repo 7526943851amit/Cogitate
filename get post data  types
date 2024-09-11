@@ -1,0 +1,130 @@
+<?php 
+/* Template Name: News */
+get_header();
+ ?>
+
+<div class="news_page">
+    <div class="news_banner">
+        <div class="news_banner_content">
+            <h2>Cogitate <span>In the News</span></h2>
+        </div>
+        <div class="new_banner_img">
+            <img src="https://lightsteelblue-bear-643236.hostingersite.com/wp-content/uploads/2024/09/news@2x.png">
+        </div>
+    </div>
+    <div class="news_list">
+        <div class="news_box">
+                  <p class="newsDate">September 5, 2024</p>
+                  <h2>Cogitate Announces Partnership with One Inc</h2>
+                  <div class="newsLinks">
+                      <a href="https://www.cogitate.us/news/cogitate-announces-partnership-with-one-inc/" class="linkBtn">READ MORE</a>
+                      <ul class="d-flex align-items-end">
+                          <li><a href="https://twitter.com/cogitatetech" target="_blank"><img alt="Twitter" src="https://uatapps.cogitate.us/cogitatecms/images/new-img/twitterSI.svg" width="24px" height="24px"></a></li>
+                          <li><a href="https://www.linkedin.com/company/cogitate-technology-solutions/" target="_blank"><i class="fa fa-linkedin-square ms-3" aria-hidden="true"></i></a></li>
+                          <li><a href="https://www.facebook.com/Cogitate-Technology-Solutions-313805012108651" target="_blank"><i class="fa fa-facebook-square ms-3" aria-hidden="true"></i></a></li>
+                      </ul>
+                  </div>
+        </div>
+        <div class="news_box">
+                  <p class="newsDate">September 5, 2024</p>
+                  <h2>Cogitate Announces Partnership with One Inc</h2>
+                  <div class="newsLinks">
+                      <a href="https://www.cogitate.us/news/cogitate-announces-partnership-with-one-inc/" class="linkBtn">READ MORE</a>
+                      <ul class="d-flex align-items-end">
+                          <li><a href="https://twitter.com/cogitatetech" target="_blank"><img alt="Twitter" src="https://uatapps.cogitate.us/cogitatecms/images/new-img/twitterSI.svg" width="24px" height="24px"></a></li>
+                          <li><a href="https://www.linkedin.com/company/cogitate-technology-solutions/" target="_blank"><i class="fa fa-linkedin-square ms-3" aria-hidden="true"></i></a></li>
+                          <li><a href="https://www.facebook.com/Cogitate-Technology-Solutions-313805012108651" target="_blank"><i class="fa fa-facebook-square ms-3" aria-hidden="true"></i></a></li>
+                      </ul>
+                  </div>
+        </div>
+    </div>
+</div>
+
+<div class="news-container">
+    <?php
+    $args = array(
+        'post_type' => 'news', 
+        'posts_per_page' => -1, 
+    );
+    $news_query = new WP_Query($args);
+
+    if ($news_query->have_posts()) :
+        while ($news_query->have_posts()) : $news_query->the_post(); ?>
+            <div class="news-item">
+                <?php if (has_post_thumbnail()) : ?>
+                    <div class="news-thumbnail">
+                        <?php the_post_thumbnail('medium');  ?>
+                    </div>
+                <?php endif; ?>
+                <h2 class="news-title"><?php the_title(); ?></h2>
+                <div class="news-description">
+                    <?php the_content();  ?>
+                </div>
+                <a href="<?php the_permalink(); ?>" class="news-read-more">Read More</a>
+            </div>
+        <?php endwhile;
+
+
+        wp_reset_postdata();
+    else :
+        echo '<p>No news posts found.</p>';
+    endif;
+    ?>
+</div>
+
+<?php get_footer(); ?>
+
+
+
+
+/* news post type */
+function create_news_post_type() {
+    $labels = array(
+        'name'                  => _x('News', 'Post type general name'),
+        'singular_name'         => _x('News Item', 'Post type singular name'),
+        'menu_name'             => _x('News', 'Admin Menu text'),
+        'name_admin_bar'        => _x('News Item', 'Add New on Toolbar'),
+        'add_new'               => __('Add New'),
+        'add_new_item'          => __('Add New News Item'),
+        'new_item'              => __('New News Item'),
+        'edit_item'             => __('Edit News Item'),
+        'view_item'             => __('View News Item'),
+        'all_items'             => __('All News Items'),
+        'search_items'          => __('Search News Items'),
+        'parent_item_colon'     => __('Parent News Item:'),
+        'not_found'             => __('No News Items found.'),
+        'not_found_in_trash'    => __('No News Items found in Trash.'),
+        'featured_image'        => _x('News Featured Image', 'Overrides the “Featured Image” phrase for this post type.'),
+        'set_featured_image'    => _x('Set featured image', 'Overrides the “Set featured image” phrase for this post type.'),
+        'remove_featured_image' => _x('Remove featured image', 'Overrides the “Remove featured image” phrase for this post type.'),
+        'use_featured_image'    => _x('Use as featured image', 'Overrides the “Use as featured image” phrase for this post type.'),
+        'archives'              => _x('News Archives', 'The post type archive label used in nav menus. Default “Post Archives”.'),
+        'insert_into_item'      => _x('Insert into News Item', 'Overrides the “Insert into post”/“Insert into page” phrase.'),
+        'uploaded_to_this_item' => _x('Uploaded to this News Item', 'Overrides the “Uploaded to this post/page” phrase.'),
+        'filter_items_list'     => _x('Filter News Items list', 'Screen reader text for the filter links heading on the post type listing screen.'),
+        'items_list_navigation' => _x('News Items list navigation', 'Screen reader text for the pagination heading on the post type listing screen.'),
+        'items_list'            => _x('News Items list', 'Screen reader text for the items list heading on the post type listing screen.'),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'news'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 6,
+        'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+        'show_in_rest'       => true,
+        'taxonomies'         => array('category', 'post_tag'),
+    );
+
+    register_post_type('news', $args);
+}
+
+add_action('init', 'create_news_post_type');
+/* news post type end */
