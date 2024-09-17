@@ -1,0 +1,7 @@
+if (window.location.href !== '<?php echo home_url();?>/') {
+    const linksToUpdate = document.querySelectorAll('a[href="#benefits"], a[href="#ebook-industrys"], a[href="#pricing_table"]');
+    linksToUpdate.forEach(link => {
+        const newHref = link.getAttribute('href').replace('#', '<?php echo home_url(); ?>/#');
+        link.setAttribute('href', newHref);
+    });
+}
