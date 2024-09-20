@@ -1,0 +1,22 @@
+
+<div class="blog-author">
+    <?php
+$post_id = get_the_ID();
+// echo $post_id;
+// die;
+$author_id = get_post_field( 'post_author', $post_id );
+// echo $author_id;
+// die;
+    $user_info = get_userdata(1);
+    $author_image = get_avatar_url($author_id);
+    $author_name = get_the_author_meta('display_name', $author_id);
+    $author_bio = get_the_author_meta('description', $author_id);
+    ?>
+    
+    <img src="<?php echo esc_url($author_image); ?>" alt="" class="author-image">
+    <div class="author-details">
+        <h2 class="author-name"><?php echo esc_html($author_name); ?></h2>
+            <p class="author-bio"><?php echo esc_html($author_bio); ?></p>
+     
+    </div>
+</div>
