@@ -1,0 +1,17 @@
+                       <ul class="d-flex align-items-end">
+    <li>
+        <a href="https://twitter.com/share?url=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>&text=<?php echo urlencode(get_the_title(get_the_ID())); ?>" target="_blank">
+            <img alt="Twitter" src="https://uatapps.cogitate.us/cogitatecms/images/new-img/twitterSI.svg" width="24" height="24">
+        </a>
+    </li>
+    <li>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>" target="_blank">
+            <i class="fa fa-linkedin-square ms-3" aria-hidden="true"></i>
+        </a>
+    </li>
+    <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>" target="_blank">
+            <i class="fa fa-facebook-square ms-3" aria-hidden="true"></i>
+        </a>
+    </li>
+</ul>
