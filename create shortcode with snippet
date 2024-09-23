@@ -1,0 +1,10 @@
+function apply_now_header(){
+	$html = "<div class='apply-now'>";
+	$html .= "<div class='apply-now-content'>";
+	$html .= "<span class='apply-now-close'>&times;</span>";
+	$html .= do_shortcode('[contact-form-7 id="6abf7b5" title="Apply Now"]');
+	$html .= '</div></div>';
+
+	echo $html;
+}
+add_action('wp_head', 'apply_now_header');
