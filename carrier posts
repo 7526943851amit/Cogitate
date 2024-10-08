@@ -1,0 +1,85 @@
+function career_accordion_shortcode() {
+    ob_start(); 
+
+    $args = array(
+        'post_type' => 'career',
+        'posts_per_page' => -1,
+		'orderby'=> 'date', 
+    'order' => 'ASC'
+    );
+    $career_query = new WP_Query($args);
+
+    if ($career_query->have_posts()) :
+        echo "<div class='accordion-wrapper'>";
+        while ($career_query->have_posts()) : $career_query->the_post();
+            ?>
+            <div class='accordion'>
+                <h3 class='accordion__title'><?php the_title(); ?></h3>
+                <div class='accordion__content'>
+                    <?php the_content(); ?>
+                </div>
+            </div>
+            <?php
+        endwhile;
+        echo "</div>";
+        wp_reset_postdata();
+    else :
+        echo 'No careers found';
+    endif;
+
+    return ob_get_clean(); // Return buffered content
+}
+add_shortcode('career_accordion', 'career_accordion_shortcode');
+
+
+/* news post type */
+function create_news_post_type() {
+    $labels = array(
+        'name'                  => _x('News', 'Post type general name'),
+        'singular_name'         => _x('News Item', 'Post type singular name'),
+        'menu_name'             => _x('News', 'Admin Menu text'),
+        'name_admin_bar'        => _x('News Item', 'Add New on Toolbar'),
+        'add_new'               => __('Add New'),
+        'add_new_item'          => __('Add New News Item'),
+        'new_item'              => __('New News Item'),
+        'edit_item'             => __('Edit News Item'),
+        'view_item'             => __('View News Item'),
+        'all_items'             => __('All News Items'),
+        'search_items'          => __('Search News Items'),
+        'parent_item_colon'     => __('Parent News Item:'),
+        'not_found'             => __('No News Items found.'),
+        'not_found_in_trash'    => __('No News Items found in Trash.'),
+        'featured_image'        => _x('News Featured Image', 'Overrides the “Featured Image” phrase for this post type.'),
+        'set_featured_image'    => _x('Set featured image', 'Overrides the “Set featured image” phrase for this post type.'),
+        'remove_featured_image' => _x('Remove featured image', 'Overrides the “Remove featured image” phrase for this post type.'),
+        'use_featured_image'    => _x('Use as featured image', 'Overrides the “Use as featured image” phrase for this post type.'),
+        'archives'              => _x('News Archives', 'The post type archive label used in nav menus. Default “Post Archives”.'),
+        'insert_into_item'      => _x('Insert into News Item', 'Overrides the “Insert into post”/“Insert into page” phrase.'),
+        'uploaded_to_this_item' => _x('Uploaded to this News Item', 'Overrides the “Uploaded to this post/page” phrase.'),
+        'filter_items_list'     => _x('Filter News Items list', 'Screen reader text for the filter links heading on the post type listing screen.'),
+        'items_list_navigation' => _x('News Items list navigation', 'Screen reader text for the pagination heading on the post type listing screen.'),
+        'items_list'            => _x('News Items list', 'Screen reader text for the items list heading on the post type listing screen.'),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'news'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 6,
+        'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+        'show_in_rest'       => true,
+        'taxonomies'         => array('category', 'post_tag'),
+    );
+
+    register_post_type('news', $args);
+}
+
+add_action('init', 'create_news_post_type');
+/* news post type end */
