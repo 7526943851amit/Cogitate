@@ -26,3 +26,47 @@ $(document).ready(function() {
 
     $('a[href="#"]').attr('href', 'javascript:void(0)');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// hedaer sticky 
+
+$(document).ready(function() {
+    $('#learn_more_after').click(function(e) {
+        e.preventDefault(); 
+
+        var target = $(this).attr('href'); 
+
+        
+        var headerHeight = $('.header_c_wrap').outerHeight(); 
+
+      
+        var offset = $(target).offset().top - headerHeight;
+
+   
+        $('html, body').animate({
+            scrollTop: offset
+        }, 500);  
+    });
+});
