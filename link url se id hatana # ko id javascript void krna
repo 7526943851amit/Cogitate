@@ -8,3 +8,10 @@ $(document).ready(function() {
         $('html, body').scrollTop($(target).offset().top);
     });
 });
+
+
+
+$(document).ready(function() {
+
+    $('a[href="#"]').attr('href', 'javascript:void(0)');
+});
