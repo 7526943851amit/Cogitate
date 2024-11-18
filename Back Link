@@ -1,0 +1,9 @@
+<a href="#" id="backLink">Link back</a>
+
+
+
+
+$("#backLink").click(function() {
+    event.preventDefault();
+    history.back(1);
+});
