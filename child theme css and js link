@@ -5,3 +5,18 @@ function enqueue_parent_styles() {
 }
 
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
+/* adding js */
+function my_custom_scripts() {
+ 
+    wp_enqueue_script('jquery-cdn', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), null, true);
+
+	// Slick Carousel CSS and JS enqueue
+	wp_enqueue_style('slick-css', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css', array(), null);
+	wp_enqueue_style('slick-theme-css', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css', array(), null);
+	wp_enqueue_script('slick-js', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js', array('jquery-cdn'), null, true);
+    wp_enqueue_script( 'custom-reangesliderjs', get_stylesheet_directory_uri() . '/js/rangeslider.min.js', array( 'jquery' ),'',true );
+    wp_enqueue_script( 'custom-js', get_stylesheet_directory_uri() . '/js/custom.js', array( 'jquery' ),'',true );
+    wp_enqueue_script( 'floatmenus-js', get_stylesheet_directory_uri() . '/js/floating_menu.js', array( 'jquery' ),'',true );
+ 
+}
+add_action( 'wp_enqueue_scripts', 'my_custom_scripts' );
