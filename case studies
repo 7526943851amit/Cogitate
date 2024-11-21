@@ -1,0 +1,71 @@
+function home_page_case_studies_shortcode() {
+    ob_start(); 
+
+  
+  $args = array(
+    'post_type' => 'case_study',
+    'posts_per_page' => 3, 
+    'tax_query' => array(
+        array(
+            'taxonomy' => 'category',   
+            'field'    => 'slug',     
+            'terms'    => 'home',       
+        ),
+    ),
+);
+
+    $case_study_query = new WP_Query($args);
+
+    if ($case_study_query->have_posts()) :
+        echo '<div class="case-studies">';
+        while ($case_study_query->have_posts()) : $case_study_query->the_post(); ?>
+            <div class="case-studies-box">
+                <div class="case-studies-img-box">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <img src="<?php the_post_thumbnail_url('full'); ?>" alt="no image">
+                    <?php else : ?>
+                        <img src="IMG.jpg" alt="no image">
+                    <?php endif; ?>
+                    <a href="<?php the_permalink(); ?>" class="case-img-text">
+                        READ CASE STUDY
+                    </a>
+                </div>
+                <div class="case-studies-text-box">
+                    <a href="<?php the_permalink(); ?>">
+                    <h2 class="case-heading"><?php the_title(); ?></h2>
+                    <p class="case-description">    <?php echo wp_trim_words(get_the_content(), 8, ''); ?></p>
+                    <div class="case-btns">
+                        <?php if (get_field('add_first_tag')) : ?>
+                            <button class="blue">
+                                <?php echo get_field('add_first_tag'); ?>
+                            </button>
+                        <?php endif; ?>
+
+                        <?php if (get_field('add_second_tag')) : ?>
+                            <button class="grey">
+                                <?php echo get_field('add_second_tag'); ?>
+                            </button>
+                        <?php endif; ?>
+
+                        <?php if (get_field('add__third_tag')) : ?>
+                            <button class="dark">
+                                <?php echo get_field('add__third_tag'); ?>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        <?php endwhile;
+        echo '</div>';
+    else :
+        echo '<p>No case studies found.</p>';
+    endif;
+
+    wp_reset_postdata(); 
+
+    return ob_get_clean(); 
+}
+
+
+add_shortcode('home_case_studies', 'home_page_case_studies_shortcode');
