@@ -5,3 +5,19 @@ if (window.location.href !== '<?php echo home_url();?>/') {
         link.setAttribute('href', newHref);
     });
 }
+function my_custom_script() {
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.href !== '<?php echo home_url(); ?>/home/') {
+                const linksToUpdate = document.querySelectorAll('a[href="#pricing"], a[href="#benefits"], a[href="#work"]');
+                linksToUpdate.forEach(link => {
+                    const newHref = link.getAttribute('href').replace('#', '<?php echo home_url(); ?>/home/#');
+                    link.setAttribute('href', newHref);
+                });
+            }
+        });
+    </script>
+    <?php
+}
+add_action('wp_head', 'my_custom_script');
