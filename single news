@@ -1,0 +1,90 @@
+<?php
+get_header();
+?>
+
+
+
+
+
+
+<div class="single_news_page">
+    <div class="single_news_container">
+        <div class="singleNews_post">
+            <div class="NewsPost_content">
+                <p class="pageTitle">Press Releases</p>
+                <h1 class="NewsPost_title"><?php 
+                            $title = get_the_title();
+                 echo $modifiedTitle = str_replace("DigitalEdge", "Digital<i>Edge</i>", $title); ?> </h1>
+                    <div class="pageLinks">
+                        <p class="NewsPost_date publDate">Published on <?php echo get_the_date(); ?></p>
+                   
+
+                        <ul class="d-flex align-items-end">
+    <li>
+        <a href="https://twitter.com/share?url=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>&text=<?php echo urlencode(get_the_title(get_the_ID())); ?>" target="_blank">
+            <img alt="Twitter" src="https://uatapps.cogitate.us/cogitatecms/images/new-img/twitterSI.svg" width="24" height="24">
+        </a>
+    </li>
+    <li>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>" target="_blank">
+            <i class="fa fa-linkedin-square ms-3" aria-hidden="true"></i>
+        </a>
+    </li>
+    <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_the_permalink(get_the_ID())); ?>" target="_blank">
+            <i class="fa fa-facebook-square ms-3" aria-hidden="true"></i>
+        </a>
+    </li>
+</ul>
+
+                    
+                    </div>
+                
+                    <div class="cmsContent">
+                       <?php  
+                  ob_start(); 
+                  the_content(); 
+                  $content = ob_get_clean(); 
+              
+                  
+                  $modifiedContent = str_replace("DigitalEdge", "Digital<i>Edge</i>", $content);
+                  echo $modifiedContent;?>
+                    </div>
+    
+            </div>
+            <div class="singlePost_sidebar">
+                <div class="newsLetter grey_bg">
+                     
+                       <?php  dynamic_sidebar('single-left-widget-one'); ?>
+                            
+                </div>
+                <div class="newsLetter grey_bg">
+                <?php  dynamic_sidebar('single-left-widget-two'); ?>    
+                </div>
+                <?php 
+$related_posts = do_shortcode('[related_posts]'); 
+if ($related_posts) : ?>
+    <div class="related_content grey_bg">
+        <div class="related_content_wrap">
+            <h4>Related Content</h4>
+            <?php echo $related_posts;  ?>
+        </div>           
+    </div>
+<?php endif; ?>
+                            
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+
+
+
+
+
+<!-- echo "gdfgfdg"; -->
+
+
+<?php get_footer();
+?>
