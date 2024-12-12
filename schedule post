@@ -1,0 +1,15 @@
+/* Show future posts */
+function show_future_posts($posts)
+{
+    global $wp_query, $wpdb;
+
+    // Check if it's a single post page and no posts are found
+    if (is_single() && $wp_query->post_count == 0) {
+        // Retrieve future posts manually
+        $posts = $wpdb->get_results($wp_query->request);
+    }
+
+    return $posts;
+}
+
+add_filter('the_posts', 'show_future_posts');
