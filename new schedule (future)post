@@ -1,0 +1,39 @@
+
+
+function flush_rewrite_rules_on_activation() {
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'flush_rewrite_rules_on_activation');
+
+function custom_rewrite_rule() {
+    add_rewrite_rule('^event/([^/]+)/?', 'index.php?post_type=event&name=$matches[1]', 'top');
+}
+add_action('init', 'custom_rewrite_rule');
+function custom_future_post_permalink($url, $post) {
+    if ('event' == get_post_type($post) && $post->post_date > current_time('mysql')) {
+        $url = home_url('/event/' . $post->post_name . '/'); // Simple permalink format
+    }
+    return $url;
+}
+
+add_filter('post_type_link', 'custom_future_post_permalink', 10, 2);
+function show_future_posts($posts) {
+    global $wp_query, $wpdb;
+
+    // Agar single post page hai aur koi post nahi mil raha hai
+    if (is_single() && $wp_query->post_count == 0) {
+        // Future posts ko fetch karna
+        $future_posts = $wpdb->get_results($wp_query->request);
+        
+        if ($future_posts) {
+            $posts = array_merge($posts, $future_posts);
+        }
+    }
+
+    return $posts;
+}
+
+add_filter('the_posts', 'show_future_posts');
+
+
+
