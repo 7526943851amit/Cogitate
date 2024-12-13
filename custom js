@@ -1,186 +1,1155 @@
-function calculateSavings() {
-  const numberOfPolicies = parseFloat(document.getElementById('points').value);
-  console.log("numberOfPolicies", numberOfPolicies);
-  const cycleTime = parseFloat(document.getElementById('points2').value);
-  console.log("cycleTime", cycleTime);
-  const hourlyWage = parseFloat(document.getElementById('points3').value);
-  console.log("hourlyWage", hourlyWage);
-  document.getElementById('number_of_policies').textContent = `${numberOfPolicies.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
-  document.getElementById('average_cycle_time').textContent = cycleTime + ' Days';
-  document.getElementById('average_hourly_wage').textContent = '$' + hourlyWage;
-  const workingHoursPerDay = 8;
-  const constantFactor = 0.875;
-  const savings = numberOfPolicies * (workingHoursPerDay * cycleTime) * hourlyWage * constantFactor;
-  console.log('savings',savings);
-  document.querySelector('.formula_result').textContent = `$${savings.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
-}
-document.getElementById('points').addEventListener('input', calculateSavings);
-document.getElementById('points2').addEventListener('input', calculateSavings);
-document.getElementById('points3').addEventListener('input', calculateSavings);
-calculateSavings();
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const menuItems = document.querySelectorAll('.floating_menu a');
-  const sections = Array.from(menuItems).map(item => document.querySelector(item.getAttribute('href')));
-
-  function updateActiveClass() {
-      let currentIndex = -1;
-
-      sections.forEach((section, index) => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-              currentIndex = index;
-          }
+setTimeout(function () {
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 2){
+          $('.header-wrap').parent().parent().addClass("sticky");
+        }
+        else{
+          $('.header-wrap').parent().parent().removeClass("sticky");
+        }
       });
-
-      // Remove 'active' class from all menu items
-      menuItems.forEach((item, index) => {
-          item.parentElement.classList.toggle('active', index === currentIndex);
-      });
-  }
-
-  // Click event to scroll and set active class
-  menuItems.forEach(item => {
-      item.addEventListener('click', function (event) {
-          event.preventDefault(); 
-           
-          const targetId = this.getAttribute('href'); 
-          const targetElement = document.querySelector(targetId); 
-
-          if (targetElement) {
-              targetElement.scrollIntoView({ behavior: 'smooth' });
-
-              // Remove 'active' class from all menu items
-              menuItems.forEach(menuItem => {
-                  menuItem.parentElement.classList.remove('active');
-              });
-
-              // Add 'active' class to the clicked menu item
-              this.parentElement.classList.add('active');
-          }
-      });
+     }, 2500);
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('.elementor-widget-container img'); 
+    images.forEach(function (image) {
+        image.removeAttribute('style'); 
+    });
   });
+  
+  $(document).ready(function(){
+    $('.brand_logo_slider').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      arrows:false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },  
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }   
+          }
+      ]
+    });
+  });
+  
+  $(document).ready(function(){
+    var $slider = $('.blog_resources .elementor-shortcode'); 
+    if ($slider.children().length > 2) {
+         $slider.slick({
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          arrows: false,
+          dots: true,
+          responsive: [
+            {
+              breakpoint: 991,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 3
+              }
+            },
+            {
+              breakpoint: 640,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                  arrows: true,
+                  dots: false,
+            
+              }
+            }
+          ]
+        });
+    } else {
+       $slider.unslick; 
+       $slider.addClass("unslick");
+  
+    }
+  });
+  
+  $(document).ready(function(){
+    $('.testimonial_wrap').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 7000,
+      arrows:false,
+      dots:true,
+        responsive: [
+            {
+                breakpoint: 991,
+                settings: {
+                    dots: false,
+                    arrows: true
+                }
+            },
+            {
+              breakpoint: 767,
+              settings: {
+               adaptiveHeight: true,
+                  dots: false,
+                  arrows: true
+            
+              }
+            }
+        ]
+    });
+  });
+  
+  
+  
+  
+  function initializeSlider() {
+      if ($(window).width() <= 1024) {
+  
 
-  // Listen for scroll events to update the active class
-  window.addEventListener('scroll', updateActiveClass);
+          if (!$('.wdt-flex-banner-options').hasClass('slick-initialized')) {
+              $('.wdt-flex-banner-options').slick({
+                  slidesToShow: 6,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 2000,
+                  arrows: false,
+                  dots: true,
+                  responsive: [
+                      {
+                          breakpoint: 1025,
+                          settings: {
+                              slidesToShow: 3
+                          }
+                      },
+                      {
+                          breakpoint: 991,
+                          settings: {
+                              slidesToShow: 2
+                          }
+                      },
+                      {
+                          breakpoint: 540,
+                          settings: {
+                              slidesToShow: 1
+                          }
+                      }
+                  ]
+              });
+          }
+      } else {
 
-  // Initial check to set the active class correctly on page load
-  updateActiveClass();
-
-  // Ensure the first menu item is active on page load if the first section is in view
-  if (sections.length > 0) {
-      const firstSectionRect = sections[0].getBoundingClientRect();
-      if (firstSectionRect.top <= window.innerHeight / 2 && firstSectionRect.bottom >= window.innerHeight / 2) {
-          menuItems[0].parentElement.classList.add('active');
+          if ($('.wdt-flex-banner-options').hasClass('slick-initialized')) {
+             $('.wdt-flex-banner-options').slick('unslick');
+             $('.wdt-flex-banner-options').removeClass('slick-initialized slick-slider');
+              
+          }
       }
   }
+  
+ 
+  $(document).ready(function() {
+      initializeSlider();
+  });
+  
+ 
+  $(window).on('resize', function() {
+      initializeSlider();
+  });
+  
+  
+ 
+  $(document).ready(function() {
+  $('.wdt-flex-banner-option_slide').hover(function() {
+
+      $('.wdt-flex-banner-option_slide').removeClass('active');
+      
+
+      $(this).addClass('active');
+  });
+      
+  $('.wdt-flex-banner-option_slide').click(function() {
+
+      $('.wdt-flex-banner-option_slide').removeClass('active');
+      
+
+      $(this).addClass('active');
+  });	
+      
+      
+  });
+  
+  document.addEventListener("DOMContentLoaded", function() {
+    const counters = document.querySelectorAll('.counter');
+  
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / 200; 
+        let current = 0;
+  
+        const formatNumber = (num) => {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+  
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.innerText = formatNumber(Math.ceil(current));
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.innerText = formatNumber(target);
+            }
+        };
+  
+        updateCounter();
+    });
+  });
+
+   function formatCounter(num) {
+          let formattedNum;
+          if (num >= 1000000000) {
+      
+              formattedNum = num / 1000000000;
+              return formattedNum % 1 === 0 ? formattedNum + 'B' : formattedNum.toFixed(1) + 'B';
+          } else if (num >= 1000000) {
+         
+              formattedNum = num / 1000000;
+              return formattedNum % 1 === 0 ? formattedNum + 'M' : formattedNum.toFixed(1) + 'M';
+          }
+          return num; 
+      }
+  
+
+      function updateCounter(counterElement) {
+          let count = parseInt(counterElement.textContent, 10); 
+          let target = parseInt(counterElement.getAttribute('data-target2'), 10); // Get target value from data-target2 attribute
+          let increment = 100000000; 
+          let speed = 100; 
+  
+
+          function incrementCounter() {
+              counterElement.textContent = formatCounter(count); 
+              if (count < target) {
+                  count += increment; 
+              } else {
+                  clearInterval(interval); 
+              }
+          }
+  
+   
+          let interval = setInterval(incrementCounter, speed);
+      }
+  
+ 
+      document.querySelectorAll('.counter2').forEach(counter => {
+    
+          updateCounter(counter);
+      });
+
+  
+  var $element = $('input[type="range"]');
+  $element
+    .rangeslider({
+      polyfill: false,
+      onInit: function() {
+        var $handle = $('.rangeslider__handle', this.$range);
+        updateHandle($handle[0], this.value);
+      }
+    })
+    .on('input', function(e) {
+      var $handle = $('.rangeslider__handle', e.target.nextSibling);
+      updateHandle($handle[0], this.value);
+    });
+  
+  function updateHandle(el, val) {
+    el.innerHTML = `<span data-range="${val}">${val}</span>`;
+  }
+  
+  document.addEventListener("DOMContentLoaded", function () {
+      const calculatorContent = document.querySelector('.calculator_content.active');
+  
+      function updateRanges() {
+          if (calculatorContent) {
+              const range1 = document.querySelector('.calculator_content.active .range1 .rangeslider__handle span').getAttribute('data-range');
+              const range2 = document.querySelector('.calculator_content.active .range2 .rangeslider__handle span').getAttribute('data-range');
+              const range3 = document.querySelector('.calculator_content.active .range3 .rangeslider__handle span').getAttribute('data-range');
+  
+              const workingHoursPerDay = document.querySelector('.calculator_content.active .PerDay').value;
+              const constantFactor = document.querySelector('.calculator_content.active .constantFactor').value;
+              
+             
+              
+            if(range1 && range2 && range3) {
+              const numberOfPolicies = parseFloat(range1);
+              const cycleTime = parseFloat(range2);
+              const hourlyWage = parseFloat(range3);
+              
+              //const workingHoursPerDay = 8;
+              //const constantFactor = 0.875;
+              const savings = numberOfPolicies * (workingHoursPerDay * cycleTime) * hourlyWage * constantFactor;
+              //console.log('savings new', savings);
+              
+              document.querySelector('.calculator_content.active .formula_result').textContent = `$${savings.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+            }            
+          }
+      }
+  
+
+      updateRanges();
+      
+      var $element = $('input[type="range"]');
+      $element
+        .rangeslider({
+          polyfill: false,
+          onInit: function() {
+            var $handle = $('.rangeslider__handle', this.$range);
+            updateHandle($handle[0], this.value);
+          }
+        })
+        .on('input', function(e) {
+          var $handle = $('.rangeslider__handle', e.target.nextSibling);
+          updateHandle($handle[0], this.value);
+        });
+      
+      function updateHandle(el, val) {
+        el.innerHTML = `<span data-range="${val}">${val}</span>`;
+        updateRanges();
+      }    
+      
+  });
+  
+  
+  function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+
+  tabcontent = document.getElementsByClassName("calculator_content");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+      tabcontent[i].classList.remove("active");
+  }
+
+  tablinks = document.getElementsByClassName("calculator_tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].classList.remove("active");
+  }
+
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+  
+  const calculatorContent = document.querySelector('.calculator_content.active');
+  
+  
+  if (calculatorContent) {
+      const range1 = calculatorContent.querySelector('.range1 .rangeslider__handle span').getAttribute('data-range');
+      const range2 = calculatorContent.querySelector('.range2 .rangeslider__handle span').getAttribute('data-range');
+      const range3 = calculatorContent.querySelector('.range3 .rangeslider__handle span').getAttribute('data-range');
+  
+      const workingHoursPerDay = document.querySelector('.calculator_content.active .PerDay').value;
+      const constantFactor = document.querySelector('.calculator_content.active .constantFactor').value;
+  
+
+      
+    if(range1 && range2 && range3) {
+      const numberOfPolicies = parseFloat(range1);
+      const cycleTime = parseFloat(range2);
+      const hourlyWage = parseFloat(range3);
+      
+      // const workingHoursPerDay = 8;
+      // const constantFactor = 0.875;
+      const savings = numberOfPolicies * (workingHoursPerDay * cycleTime) * hourlyWage * constantFactor;
+      //console.log('savings', savings);
+      
+      document.querySelector('.calculator_content.active .formula_result').textContent = `$${savings.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+    }            
+  }
+  
+  } 
+  
+  
+  document.querySelectorAll('.elementskit-submenu-indicator').forEach(function(indicator) {
+    indicator.addEventListener('click', function() {
+        const anchor = this.closest('li').querySelector('a.ekit-menu-nav-link');
+        if (anchor) {
+            anchor.classList.toggle('active');
+        }
+    });
+  });
+  
+  
+  // Menu Drawer Js
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuHamburger = document.querySelector('.elementskit-menu-hamburger');
+    const menuOverlay = document.querySelector('.elementskit-menu-overlay');
+    const menuClose = document.querySelector('.elementskit-menu-close');
+    
+
+    menuHamburger.addEventListener('click', function() {
+        document.body.classList.add('menu-hamburger-open');
+    });
+
+    menuClose.addEventListener('click', function() {
+        document.body.classList.remove('menu-hamburger-open');
+    });
+  
+
+    menuOverlay.addEventListener('click', function(event) {
+
+        if (event.target === menuOverlay) {
+            document.body.classList.remove('menu-hamburger-open');
+        }
+    });
+  });
+  
+  
+  $(document).ready(function(){
+    $('.logo_grid_block_inner').each(function() {
+        if ($(this).find('.elementor-widget-text-editor').length === 0) {
+            $(this).addClass('no_content');
+        }
+      });
+    });
+  
+  
+  
+  
+  //
+  
+  
+  
+  $(document).ready(function () {
+      const $slides = $(".cogitate-story-slides");
+      const $dots = $(".cogitate-story-dot");
+      let currentIndex = 0;
+  
+      function goToSlide(index) {
+          // Move slides
+          $slides.css("transform", `translateX(-${index * 100}%)`);
+          currentIndex = index;
+      }
+  
+
+      $dots.each(function (index) {
+          $(this).on("click", function () {
+    
+              $dots.filter(".active").removeClass("active");
+              $(this).addClass("active");
+              goToSlide(index);
+          });
+      });
+  });
+  
+  
+  
+  
+  
+  $(document).ready(function () {
+    $('.elementor-icon-list-item a, .menu-item a').on('click', function (event) {
+        event.preventDefault(); 
+  
+        const href = $(this).attr('href');
+        const targetId = href.split('#')[1]; 
+        console.log('targetId',targetId);
+        const currentUrl = window.location.href;
+  
+      
+        const isMainPage = currentUrl.endsWith('/digitaledge-technology/');
+  
+        
+        if (targetId && isMainPage) {
+            const targetElement = $('#' + targetId);
+            if (targetElement.length) {
+                const elementPosition = targetElement.offset().top - 200; 
+  
+                $('html, body').animate({
+                    scrollTop: elementPosition
+                }, 600, 'swing');
+  
+          
+                history.pushState(null, null, currentUrl.split('#')[0]); 
+            }
+        } else {
+  
+            window.location.href = href;
+        }
+    });
+  });
+  
+  
+  
+  
+  
+  $(document).ready(function() {
+    $('.logo_block a').each(function() {
+        var href = $(this).attr('href');
+        if (href && href !== '#') {
+            $(this).closest('.logo_block').addClass('link_add');
+        }
+    });
+  });
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  $(document).ready(function() {
+      $('#learn_more_after').click(function(e) {
+          e.preventDefault(); 
+  
+          var target = $(this).attr('href'); 
+  
+          var headerHeight = $('.header_c_wrap').outerHeight(); 
+  
+          var offset = $(target).offset().top - headerHeight;
+  
+          
+          $('html, body').scrollTop(offset);
+      });
+  });
+  
+  
+  
+  $(document).ready(function() {
+  
+      $('a[href="#"]').attr('href', 'javascript:void(0)');
+  });
+  
+  
+  
+  
+  $(document).ready(function() {
+      function applyHubSpotStyle() {
+          const iframe = $('#hs-form-iframe-0')[0];
+          
+          if (iframe && iframe.contentDocument) {
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+              const messageParagraph = $(iframeDoc).find('.submitted-message p');
+              
+              if (messageParagraph.length) {
+                  messageParagraph.css('color', '#fff');
+              } else {
+                  setTimeout(applyHubSpotStyle, 100); 
+              }
+          } else {
+              setTimeout(applyHubSpotStyle, 100); 
+          }
+      }
+  
+      applyHubSpotStyle();
+  });
+  
+  
+  
+  
+  
+  
+  // contact form js 
+ $(document).ready(function () {
+    // Custom validation methods
+    $.validator.addMethod(
+        "validName",
+        function (value, element) {
+            const invalidWords = ["mathematics"];
+            return (
+                this.optional(element) ||
+                (/^[a-zA-Z\s]+$/.test(value) && !invalidWords.includes(value.toLowerCase()))
+            );
+        },
+        "Please enter a valid name (no numbers or restricted words like 'mathematics')."
+    );
+
+    $.validator.addMethod(
+        "validUSPhone",
+        function (value, element) {
+            // Regex for U.S. phone numbers
+            const usPhoneRegex = /^(\+1\s?)?(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/;
+            return this.optional(element) || usPhoneRegex.test(value);
+        },
+        "Please enter a valid phone number."
+    );
+
+    $.validator.addMethod("validEmail", function (value, element) {
+        const dummyEmailsPattern = /(test|example|demo|user)\s?[\d]*@/i;
+
+        if (dummyEmailsPattern.test(value)) {
+            return false;
+        }
+
+        const validEmailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        if (!validEmailPattern.test(value)) {
+            return false;
+        }
+
+        return true;
+    }, "Please enter a valid, realistic email address.");
+
+    $.validator.addMethod(
+        "businessEmail",
+        function (value, element) {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regex for basic email validation
+            const domain = value.split("@")[1]; // Extract domain part
+            const publicDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+
+            return this.optional(element) || (emailRegex.test(value) && !publicDomains.includes(domain));
+        },
+        "Please use a valid business email address."
+    );
+
+    // Initialize validation for the contact form
+    $("#contact-form").validate({
+        rules: {
+            firstname: {
+                required: true,
+                maxlength: 50,
+                validName: true,
+            },
+            lastname: {
+                required: true,
+                maxlength: 50,
+                validName: true,
+            },
+            email: {
+                required: true,
+                email: true,
+                validEmail: true,
+                businessEmail: true,
+            },
+            phone: {
+                required: true,
+                maxlength: 15,
+                validUSPhone: true, // Add custom validation for U.S. phone numbers
+            },
+            company: {
+                required: true,
+                maxlength: 50,
+            },
+            jobtitle: {
+                required: true,
+                maxlength: 50,
+            },
+            how_can_we_help_you: {
+                required: true,
+            },
+        },
+        messages: {
+            firstname: {
+                required: "Please enter your first name.",
+                validName: "Only alphabetical characters are allowed.",
+            },
+            lastname: {
+                required: "Please enter your last name.",
+                validName: "Only alphabetical characters are allowed.",
+            },
+            email: {
+                required: "Please enter an email address.",
+                email: "Please enter a valid email address.",
+                businessEmail: "Please use your business email address.",
+                validEmail: "Please enter a valid, realistic email address.",
+            },
+            phone: {
+                required: "Please enter a valid phone number.",
+                validUSPhone: "Please enter a valid phone number.",
+            },
+            company: {
+                required: "Please enter your company name.",
+            },
+            jobtitle: {
+                required: "Please enter your job title.",
+            },
+            how_can_we_help_you: {
+                required: "Please select how we can assist you.",
+            },
+        },
+        submitHandler: function (form) {
+            const formData = {
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
+                email: $("#email").val(),
+                phone: $("#phone").val(),
+                company: $("#company").val(),
+                jobtitle: $("#Jobtitle").val(),
+                message: $("#message").val(),
+                how_can_we_help_you: $("#how_can_we_help_you").val(),
+            };
+
+            $.ajax({
+                url: "/wp-admin/admin-ajax.php?action=contact_form_submission",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $(".contact-us-form-con").hide();
+                        $(".thankyou").show();
+                        $("html, body").animate({ scrollTop: $("#aftersubmit_contact_form").offset().top }, 500);
+                    } else {
+                        alert(response.message || "Something went wrong. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to submit. Please check your connection.");
+                },
+            });
+
+            return false; // Prevent default form submission
+        },
+    });
 });
 
-
-
-/* floating menu sidebar */
-function floating_menu_shortcode() {
-    if (is_front_page()) {
-        ob_start(); 
-        ?>
-        <ul class="floating_menu">
-   <li class="f_m_item active">
-      <a href="#home-section">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Home
-         </div>
-      </a>
-   </li>
-      <li class="f_m_item">
-      <a href="#our-products">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-         Products
-         </div>
-      </a>
-   </li>
-    
-      <li class="f_m_item">
-      <a href="#plateforms">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Platform
-         </div>
-      </a>
-   </li>
   
-   <li class="f_m_item">
-      <a href="#Segments">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Segments
-         </div>
-      </a>
-   </li>
-   <li class="f_m_item">
-      <a href="#our-features">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Benefits
-         </div>
-      </a>
-   </li>
-     <li class="f_m_item">
-      <a href="#Calculator">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-         Calculator 
-         </div>
-      </a>
-   </li>
-   <li class="f_m_item">
-      <a href="#testimonials">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Testimonials
-         </div>
-      </a>
-   </li>
-     <li class="f_m_item">
-      <a href="#insights-section">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Insights
-         </div>
-      </a>
-   </li>
-      <li class="f_m_item">
-      <a href="#footer-section">
-         <div class="f_m-icon">
-            <svg height="32" id="icon" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title/><circle cx="16" cy="16" r="8"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
-         </div>
-         <div class="f_m_label">
-            Footer
-         </div>
-      </a>
-   </li>
-</ul>
-<?php
-        return ob_get_clean(); 
-    }
-}
-add_shortcode('floating_menu', 'floating_menu_shortcode');
+  // contact form js end
+  
+
+
+  
+  
+  // subscribe footer js start
+  
+  $(document).ready(function () {
+    // Add custom validation methods
+    $.validator.addMethod(
+        "businessEmail",
+        function (value, element) {
+            const domain = value.split("@")[1];
+            const publicDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+            return this.optional(element) || !publicDomains.includes(domain);
+        },
+        "Please enter a business email address."
+    );
+
+    $.validator.addMethod(
+        "validEmail",
+        function (value, element) {
+            const dummyEmailsPattern = /(test|example|demo|user)\s?[\d]*@/i;
+            const validEmailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (dummyEmailsPattern.test(value) || !validEmailPattern.test(value)) {
+                return false;
+            }
+            return true;
+        },
+        "Please enter a valid, realistic email address."
+    );
+
+    // Initialize validation
+    $("#form").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                validEmail: true,
+                businessEmail: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "Please complete this required field.",
+                email: "Please enter a valid email.",
+                validEmail: "Please enter a valid, realistic email address.",
+                businessEmail: "Please enter a business email address.",
+            },
+        },
+        submitHandler: function (form) {
+            // Prevent default form submission
+            const emailValueFooter = $("#emailSub").val();
+			//console.log(emailValueFooter);
+			//debugger;
+
+            // Make AJAX request to PHP endpoint
+            $.ajax({
+                url: "/wp-admin/admin-ajax.php?action=subscribe_user", // Custom PHP action
+                type: "POST",
+                data: { email: emailValueFooter },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#form").hide();
+                        $(".thankyou_message").show();
+                    } else {
+                        alert(response.message || "Something went wrong. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to submit. Please check your connection.");
+                },
+            });
+
+            return false; // Prevent default submission
+        },
+    });
+});
+
+   // subscribe footer js end
+  // single resource   js start
+ $(document).ready(function () {
+    // Add custom validation methods
+    $.validator.addMethod(
+        "businessEmail",
+        function (value, element) {
+            const domain = value.split("@")[1];
+            const publicDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+            return this.optional(element) || !publicDomains.includes(domain);
+        },
+        "Please enter a business email address."
+    );
+
+    $.validator.addMethod(
+        "validEmail",
+        function (value, element) {
+            const dummyEmailsPattern = /(test|example|demo|user)\s?[\d]*@/i;
+            const validEmailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (dummyEmailsPattern.test(value) || !validEmailPattern.test(value)) {
+                return false;
+            }
+            return true;
+        },
+        "Please enter a valid, realistic email address."
+    );
+
+    // Initialize validation
+    $("#single_resource_form").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                validEmail: true,
+                businessEmail: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "Please complete this required field.",
+                email: "Please enter a valid email.",
+                validEmail: "Please enter a valid, realistic email address.",
+                businessEmail: "Please enter a business email address.",
+            },
+        },
+        submitHandler: function (form) {
+            // Prevent default form submission
+            const email_resource = $("#email_resource").val(); // updated to match the new input ID
+			//console.log(email_resource);
+			//debugger;
+
+            // Make AJAX request to PHP endpoint
+            $.ajax({
+                url: "/wp-admin/admin-ajax.php?action=subscribe_user", // Custom PHP action
+                type: "POST",
+                data: { email: email_resource },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#single_resource_form").hide();
+                        $(".singleresoruce_message").show();
+                    } else {
+                        alert(response.message || "Something went wrong. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to submit. Please check your connection.");
+                },
+            });
+
+            return false; // Prevent default submission
+        },
+    });
+});
+  // Single resoource js end
+  
+  
+  
+  // request a form js 
+ $(document).ready(function () {
+    // Add custom validation for names
+    $.validator.addMethod(
+        "validName",
+        function (value, element) {
+            const invalidWords = ["mathematics"];
+            return (
+                this.optional(element) ||
+                (/^[a-zA-Z\s]+$/.test(value) && !invalidWords.includes(value.toLowerCase()))
+            );
+        },
+        "Only alphabetical characters"
+    );
+
+    // Validate US phone number
+    $.validator.addMethod(
+        "validUSPhone",
+        function (value, element) {
+            const usPhoneRegex = /^(\+1\s?)?(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/;
+            return this.optional(element) || usPhoneRegex.test(value);
+        },
+        "Please enter a valid phone number."
+    );
+
+    // Validate email
+    $.validator.addMethod(
+        "validEmail",
+        function (value, element) {
+            const dummyEmailsPattern = /(test|example|demo|user)\s?[\d]*@/i;
+            const validEmailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return this.optional(element) || (validEmailPattern.test(value) && !dummyEmailsPattern.test(value));
+        },
+        "Please enter a valid email address"
+    );
+ $.validator.addMethod(
+        "businessEmail",
+        function (value, element) {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Regex for basic email validation
+            const domain = value.split("@")[1]; // Extract domain part
+            const publicDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+
+            return this.optional(element) || (emailRegex.test(value) && !publicDomains.includes(domain));
+        },
+        "Please use a valid business email address."
+    );
+
+    // Initialize form validation
+    $("#request-form").validate({
+        rules: {
+            firstname: {
+                required: true,
+                validName: true,
+                maxlength: 50
+            },
+            lastname: {
+                required: true,
+                validName: true,
+                maxlength: 50
+            },
+            email: {
+                required: true,
+                email: true,
+                validEmail: true,
+                businessEmail: true,
+            },
+            phone: {
+                required: true,
+                validUSPhone: true,
+                maxlength: 15
+            },
+            company: {
+                required: true,
+                maxlength: 50
+            },
+            jobtitle: {
+                required: true,
+                maxlength: 50
+            },
+            select_company_type: {
+                required: true
+            },
+            product_interest: {
+                required: true
+            },
+//             message_type_here: {
+//                 required: true,
+//                 maxlength: 500
+//             },
+            privacy_agreement: {
+                required: true
+            }
+        },
+        messages: {
+            firstname: {
+                required: "First Name is required",
+				 validName: "Only alphabetical characters are allowed.",
+            },
+            lastname: {
+                required: "Last Name is required",
+				 validName: "Only alphabetical characters are allowed.",
+            },
+            email: {
+               required: "Please enter an email address.",
+                email: "Please enter a valid email address.",
+                businessEmail: "Please use your business email address.",
+                validEmail: "Please enter a valid, realistic email address.",
+            },
+            phone: {
+                required: "Please enter a valid phone number.",
+                validUSPhone: "Please enter a valid phone number.",
+            },
+            company: {
+                required: "Company name is required"
+            },
+            jobtitle: {
+                required: "Job title is required"
+            },
+            select_company_type: {
+                required: "Please select your company type"
+            },
+            product_interest: {
+                required: "Please select your product interest"
+            },
+//             message_type_here: {
+//                 required: "Message is required"
+//             },
+            privacy_agreement: {
+                required: "You must agree to the privacy policy"
+            }
+        },
+        submitHandler: function (form) {
+            const formData = $(form).serializeArray();
+
+            $.ajax({
+                url: "/wp-admin/admin-ajax.php?action=request_form", // Custom PHP action
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $(".contact-us-form-details").hide();
+                        $(".thankyou").show();
+						$(form).trigger("reset");
+						     $("html, body").animate(
+                          {
+                              scrollTop: $("#aftersubmit_request_form").offset().top,
+                          },
+                          500
+                      );
+                    } else {
+                        alert(response.message || "Something went wrong. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to submit. Please check your connection.");
+                },
+            });
+
+            return false; // Prevent default form submission
+        }
+    });
+});
+
+  
+  
+  // request a form js end
+  
+  // digital technology video page
+
+
+
+  // digital technology page end
+  
+  
+  
+  // is gated form  
+ $(document).ready(function () {
+    // Add validation methods
+    $.validator.addMethod(
+        "businessEmail",
+        function (value, element) {
+            const domain = value.split("@")[1];
+            const publicDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+            return this.optional(element) || (domain && !publicDomains.includes(domain));
+        },
+        "Please use your business email only."
+    );
+
+    $.validator.addMethod(
+        "validEmail",
+        function (value, element) {
+            const dummyEmailsPattern = /(test|example|demo|user)\s?[\d]*@/i;
+            const validEmailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (dummyEmailsPattern.test(value) || !validEmailPattern.test(value)) {
+                return false;
+            }
+            return true;
+        },
+        "Please enter a valid, realistic email address."
+    );
+
+    // Initialize form validation
+    $("#hsForm").validate({
+        rules: {
+            email: {
+                required: true,
+                validEmail: true,
+                businessEmail: true,
+            },
+            gated_checkbox: {
+                required: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "Please enter your email address.",
+                validEmail: "Please enter a valid, realistic email address.",
+                businessEmail: "Please use a business email address.",
+            },
+            gated_checkbox: {
+                required: "You must agree to receive communications.",
+            },
+        },
+        submitHandler: function (form) {
+            const email = $("#email").val();
+            const assetCategory = $("#asset_category_for_resources_page").val();
+            const downloadLink = $("#download_link_for_resources_page").val();
+            const assetTitle = $("#asset_title_for_resources_page").val();
+// 			console.log('email', email);
+// 			console.log('assetCategory', assetCategory);
+// 			console.log('downloadLink', downloadLink);
+// 			console.log('assetTitle', assetTitle);
+
+            $.ajax({
+                url: "/wp-admin/admin-ajax.php?action=submit_hsform",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    email: email,
+                    asset_category_for_resources_page: assetCategory,
+                    download_link_for_resources_page: downloadLink,
+                    asset_title_for_resources_page: assetTitle,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $("#hsForm").hide();
+                        $(".thankyou_message").show();
+                    } else {
+                        alert(response.message || "Submission failed. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("There was a problem processing your request. Please try again later.");
+                },
+            });
+            return false; // Prevent default form submission
+        },
+    });
+});
+
+  
+  
+  // is gated form js end
+
+  
